@@ -1,0 +1,25 @@
+goal to build an web app that can take an audio recorded or already given and adjust the audio to make the tone deeper or higher 
+
+
+
+Tasks to complete for app
+- create ui/ learn more basic html
+- code function to record and store audio in a file
+- code function to playback audio
+-code function to augment audio 
+
+
+Code Questions 
+
+- What does importing "send_file" from flask libary do?? allows for the app to Send the contents of a file to the client.
+- what does it mean by storing audion files in dir??? Litterally storing the audio files in a seperate dir like how html files are stored in templates
+- can i use the return function twice in python????? nigga no the the functionality will only go up to the first return statement 
+- what does importing os do?? allows the program to get functions that interact with the operating system
+- how does "debug" variable work?
+
+
+
+
+
+Debugging Issus to solve
+- Template not found need html template for ui
