@@ -1,20 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Audio Player</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Editor App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .audio-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .audio-item {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            border-radius: 3px;
+        }
+        .upload-form, .record-form {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            padding: 10px;
+        }
+        input[type="file"], input[type="text"], button {
+            margin-top: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <h1>Audio Files</h1>
-    <ul>
-    {% for file in audio_files %}
-        <li>
-            {{ file }}
-            <audio controls>
-                <source src="{{ url_for('play_audio', filename=file) }}" type="audio/wav">
-                Your browser does not support the audio element.
-            </audio>
-        </li>
-    {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>Audio Editor App</h1>
+        
+        <h2>Audio Files</h2>
+        <ul class="audio-list">
+            {% for file in audio_files %}
+            <li class="audio-item">
+                <strong>{{ file }}</strong>
+                <audio controls>
+                    <source src="{{ url_for('get_audio', filename=file) }}" type="audio/wav">
+                    Your browser does not support the audio element.
+                </audio>
+
+                <!-- Change Pitch Form -->
+                <form action="{{ url_for('change_pitch', filename=file) }}" method="post">
+                    <input type="text" name="pitch_factor" placeholder="Pitch (e.g. 1, -1)" required>
+                    <button type="submit">Change Pitch</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        
+        <div class="upload-form">
+            <h2>Upload Audio</h2>
+            <form action="{{ url_for('upload_audio') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="audio_file" accept="audio/*" required>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+        
+        <div class="record-form">
+            <h2>Record New Audio</h2>
+            <form action="{{ url_for('record_audio') }}" method="post">
+                <input type="text" name="filename" placeholder="Filename (without extension)" required>
+                <input type="text" name="duration" placeholder="Duration in seconds" required>
+                <button type="submit">Start Recording</button>
+            </form>
+        </div>
+
+        <!-- Area to display status messages -->
+        <div id="status-message">
+            <!-- This area will not have dynamic content now -->
+        </div>
+    </div>
 </body>
 </html>
+
